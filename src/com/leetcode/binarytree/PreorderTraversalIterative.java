@@ -2,7 +2,7 @@ package com.leetcode.binarytree;
 
 import java.util.*;
 
-public class BinaryTreePreorderTraversalIterative {
+public class PreorderTraversalIterative {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList();
         Deque<TreeNode> stack = new ArrayDeque<>();
