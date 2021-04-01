@@ -9,18 +9,30 @@ import java.util.stream.IntStream;
 public class ConstructBinaryTreeFromInorderAndPostorderTraversal {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         return getNode(IntStream.of(inorder)
-                .boxed()
-                .collect(Collectors.toList())
-        ,IntStream.of(postorder)
                         .boxed()
                         .collect(Collectors.toList())
-        ,new TreeNode(postorder[postorder.length - 1]));
-    }
-    private TreeNode getNode (List<Integer> inorder, List<Integer> postorder, TreeNode root){
-        Integer index  = postorder.indexOf(root.val) - 1;
-        root.left = index < 0 ? null : getNode(inorder, postorder, new TreeNode(inorder.get(index)));
-        root.right = index < 0 ? null : getNode(inorder, postorder, new TreeNode(postorder.get(index)));
-        return root;
+                , IntStream.of(postorder)
+                        .boxed()
+                        .collect(Collectors.toList())
+        );
     }
 
+    private TreeNode getNode(List<Integer> inorder, List<Integer> postorder) {
+        if (inorder.size() == 0 || postorder.size() == 0) {
+            return null;
+        }
+
+        TreeNode root = new TreeNode(postorder.get(postorder.size() - 1));
+        Integer rootIndex = inorder.indexOf(root.val);
+        List<Integer> leftInorder = inorder.subList(0, rootIndex);
+        List<Integer> rightInorder = inorder.subList(rootIndex + 1, inorder.size());
+        List<Integer> leftPostorder = postorder.subList(0, leftInorder.size());
+        List<Integer> rightPostorder = postorder.subList(leftPostorder.size(), leftPostorder.size() + rightInorder.size());
+
+        //left subtree
+        root.left = getNode(leftInorder, leftPostorder);
+        //right subtree
+        root.right = getNode(rightInorder, rightPostorder);
+        return root;
+    }
 }
