@@ -1,20 +1,17 @@
 package com.leetcode.arrays;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MaximumIceCreamBars {
     public int maxIceCream(int[] costs, int coins) {
         int result = 0;
         int budget = coins;
-        Map<Integer, Integer> priceMap = new TreeMap<>();
+        Map<Integer, Integer> priceMap = new HashMap<>();
         for (int cost : costs) {
             priceMap.put(cost, (priceMap.getOrDefault(cost, 0)) + 1);
         }
-        for (Integer price : priceMap.keySet()) {
+        for (Integer price : priceMap.keySet().stream().sorted().collect(Collectors.toList())) {
             for (int i = 0; i < priceMap.get(price); i++) {
                 budget -= price;
                 if (budget >= 0) {
