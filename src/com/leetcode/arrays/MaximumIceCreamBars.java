@@ -6,13 +6,10 @@ import java.util.stream.Collectors;
 
 public class MaximumIceCreamBars {
     public int maxIceCream(int[] costs, int coins) {
-        Integer result = 0;
-        Integer budget = coins;
-        List<Integer> priceList = Arrays.stream(costs)
-                .boxed()
-                .sorted()
-                .collect(Collectors.toList());
-        for (Integer cost : priceList) {
+        int result = 0;
+        int budget = coins;
+        Arrays.sort(costs);
+        for (int cost : costs) {
             budget -= cost;
             if (budget >= 0) {
                 result++;
