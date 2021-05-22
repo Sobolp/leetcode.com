@@ -2,21 +2,37 @@ package com.leetcode.arrays;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class MaximumIceCreamBars {
     public int maxIceCream(int[] costs, int coins) {
         int result = 0;
         int budget = coins;
-        Arrays.sort(costs);
+        Map<Integer, Integer> priceMap = new TreeMap<>();
         for (int cost : costs) {
-            budget -= cost;
-            if (budget >= 0) {
-                result++;
-            } else {
-                break;
+            priceMap.put(cost, (priceMap.getOrDefault(cost, 0)) + 1);
+        }
+        for (Integer price : priceMap.keySet()) {
+            for (int i = 0; i < priceMap.get(price); i++) {
+                budget -= price;
+                if (budget >= 0) {
+                    result++;
+                } else {
+                    return result;
+                }
             }
         }
+//        Arrays.sort(costs);
+//        for (int cost : costs) {
+//            budget -= cost;
+//            if (budget >= 0) {
+//                result++;
+//            } else {
+//                break;
+//            }
+//        }
         return result;
     }
 }
