@@ -15,13 +15,6 @@ public class LongestHappyPrefix {
     }
 
     private boolean isSuffix(String s, String str) {
-        char[] arrS = s.toCharArray();
-        char[] assStr = str.toCharArray();
-        for (int i = 0; i < arrS.length; i++) {
-            if (assStr[assStr.length - 1 - i] != arrS[arrS.length - 1 - i]) {
-                return false;
-            }
-        }
-        return true;
+        return s.equals(str.substring(str.length() - s.length()));
     }
 }
